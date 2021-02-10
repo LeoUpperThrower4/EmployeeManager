@@ -38,7 +38,9 @@ namespace DatabaseManager
 
         public static string RemoveEmployee(Employee e)
         {
-            if (employees.Remove(employees.Where(x => x.Age == e.Age && x.FullName == e.FullName).ToList()[0]))
+            //handleexcpetion
+            //treat strings
+            if (employees.Remove(employees.Where(x => x.Age == e.Age && x.FullName.ToLower() == e.FullName.ToLower()).ToList()[0]))
             {
                 return "Deleted successfully";
             }

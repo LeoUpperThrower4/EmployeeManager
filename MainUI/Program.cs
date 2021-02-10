@@ -36,14 +36,14 @@ namespace MainUI
         {
             Employee e = new Employee();
             Console.Write("What's the employee's first name? ");
-            e.FirstName = Console.ReadLine();
+            e.FirstName = Console.ReadLine().Replace(" ", "");
             Console.Write("What's the employee's last name? ");
-            e.LastName = Console.ReadLine();
+            e.LastName = Console.ReadLine().Replace(" ", "");
             Console.Write("What's the employee's age? ");
 
             int age = 0;
 
-            while (!int.TryParse(Console.ReadLine(), out age))
+            while (!int.TryParse(Console.ReadLine().Replace(" ", ""), out age))
             {
                 Console.WriteLine("Please type only integer.");
             }

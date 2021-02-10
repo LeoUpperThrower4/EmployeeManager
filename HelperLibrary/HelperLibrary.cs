@@ -1,0 +1,6 @@
+﻿namespace HelperLib
+{
+    class StringTreater
+    {
+    }
+}
