@@ -1,6 +1,7 @@
 ﻿using EmployeeManager;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace DatabaseManager
@@ -29,14 +30,20 @@ namespace DatabaseManager
             return employees;
         }
 
-        public static void AddEmployee(Employee e)
+        public static string AddEmployee(Employee e)
         {
             employees.Add(e);
+            return "Employee added successfully";
         }
 
-        public static void RemoveEmployee()
+        public static string RemoveEmployee(Employee e)
         {
-            throw new NotImplementedException();
+            if (employees.Remove(employees.Where(x => x.Age == e.Age && x.FullName == e.FullName).ToList()[0]))
+            {
+                return "Deleted successfully";
+            }
+            return "Unsuccessfully deleted";
+
         }
 
         public static void EditEmployee()

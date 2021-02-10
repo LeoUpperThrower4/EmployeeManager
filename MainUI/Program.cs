@@ -8,31 +8,31 @@ namespace MainUI
     {
         static void Main(string[] args)
         {
-            Console.Write("Hello, would you like to add (1), modify (2) or delete (3) an existing employer? Just press enter to see database. ");
-            string mainOption = Console.ReadLine();
+            while (true)
+            {
+                Console.Write("Hello, would you like to add (1), modify (2) or delete (3) an existing employer? Just press enter to see database. ");
+                string mainOption = Console.ReadLine();
 
-            if (mainOption == "")
-            {
-                Console.WriteLine(Database.Output());
-            }
-            else
-            {
                 switch (mainOption)
                 {
                     case "1":
-                        Database.AddEmployee(CreateEmployee());
+                        Database.AddEmployee(AskEmployeeInfo());
                         break;
                     case "2":
                         Database.EditEmployee();
                         break;
                     case "3":
-                        Database.RemoveEmployee();
+                        Console.WriteLine(Database.RemoveEmployee(AskEmployeeInfo()));
+                        break;
+                    default:
+                        Console.WriteLine(Database.Output());
                         break;
                 }
+
             }
         }
 
-        static Employee CreateEmployee()
+        static Employee AskEmployeeInfo()
         {
             Employee e = new Employee();
             Console.Write("What's the employee's first name? ");
@@ -49,6 +49,7 @@ namespace MainUI
             }
 
             e.Age = age;
+
             return e;
         }
     }

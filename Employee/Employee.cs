@@ -25,5 +25,10 @@ namespace EmployeeManager
             this.Age = age;
         }
 
+        public override string ToString()
+        {
+            return $"Full name: {FullName}. Age: {Age}";
+        }
+
     }
 }
