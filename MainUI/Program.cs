@@ -17,6 +17,7 @@ namespace MainUI
                 {
                     case "1":
                         Database.AddEmployee(AskEmployeeInfo());
+                        Database.SaveEmployees();
                         break;
                     case "2":
                         Database.EditEmployee();
