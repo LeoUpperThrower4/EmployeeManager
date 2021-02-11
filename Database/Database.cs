@@ -1,7 +1,9 @@
 ﻿using EmployeeManager;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 
 namespace DatabaseManager
@@ -55,7 +57,48 @@ namespace DatabaseManager
 
         public static void SaveEmployees()
         {
-            throw new NotImplementedException();
+            try
+            {
+                employees.ForEach(e => CreateDATFile(e));
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+
+        }
+
+        public static bool CreateDATFile(Employee employee)
+        {
+
+            if (!(Directory.Exists(employee.LocalPath)))
+            {
+                CreateEmployeeFolder(employee);
+            }
+
+            Stream stream = File.Open($"{Path.Combine(employee.LocalPath, employee.ID)}.dat", FileMode.Create);
+
+            BinaryFormatter bf = new BinaryFormatter();
+
+            bf.Serialize(stream, employee);
+
+            stream.Close();
+
+            return true;
+        }
+
+        public static Employee OpenDATFile(Employee employee)
+        {
+
+            Stream stream = File.Open($"{Path.Combine(employee.LocalPath, employee.ID)}.dat", FileMode.Open);
+
+            BinaryFormatter bf = new BinaryFormatter();
+
+            var e = (Employee)bf.Deserialize(stream);
+
+            stream.Close();
+
+            return e;
         }
 
         public static string Output()
@@ -74,5 +117,20 @@ namespace DatabaseManager
             return sb.ToString();
         }
 
+        public static bool ExistsEmployeeFolder(Employee employee)
+        {
+            var cwd = Directory.GetCurrentDirectory();
+            var exists = Directory.Exists(Path.Combine(cwd, employee.ID));
+
+            return exists;
+        }
+
+        public static bool CreateEmployeeFolder(Employee employee)
+        {
+            var cwd = Directory.GetCurrentDirectory();
+            var dirInfo = Directory.CreateDirectory(Path.Combine(cwd, employee.ID));
+
+            return dirInfo.Exists;
+        }
     }
 }

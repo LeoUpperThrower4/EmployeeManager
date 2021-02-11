@@ -1,9 +1,11 @@
 ﻿using System;
+using System.IO;
+using System.Runtime.Serialization;
 
 namespace EmployeeManager
 {
     [Serializable]
-    public class Employee
+    public class Employee : ISerializable
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
@@ -12,8 +14,28 @@ namespace EmployeeManager
         {
             get
             {
-                return $"{FirstName} {LastName}";
+                return $"{this.FirstName} {this.LastName}";
             }
+        }
+        public string ID
+        {
+            get
+            {
+                return $"{this.FirstName.ToLower()}_{this.LastName.ToLower()}{this.Age}";
+            }
+        }
+        public string LocalPath
+        {
+            get
+            {
+                string cwd = Directory.GetCurrentDirectory();
+                string fullPath = Path.Combine(cwd, this.ID);
+
+                return fullPath;
+            }
+            set
+            { }//funciona sem nada?
+
         }
 
         public Employee() { }
@@ -25,10 +47,14 @@ namespace EmployeeManager
             this.Age = age;
         }
 
-        public override string ToString()
+        public void GetObjectData(SerializationInfo info, StreamingContext context)
         {
-            return $"Full name: {FullName}. Age: {Age}";
+            info.AddValue("employee", this);
         }
 
+        public override string ToString()
+        {
+            return $"Full name: {FullName}. Age: {Age}. ID: {ID}";
+        }
     }
 }
