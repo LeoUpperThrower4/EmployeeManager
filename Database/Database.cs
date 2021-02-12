@@ -55,14 +55,25 @@ namespace DatabaseManager
         public static string AddEmployee(Employee e)
         {
             employees.Add(e);
-            return "Employee added successfully";
+            SaveDatabase();
+            return $"\n*********\nEmployee added successfully.\n*********\n"; ;
         }
 
-        public static string RemoveEmployee(Employee e)
+        public static Employee SearchEmployee(string id)
+        {
+            return employees.Where(employee => employee.ID == id).ToList()[0];
+        }
+
+        public static Employee SearchEmployee(Employee e)
+        {
+            return employees.Where(employee => employee.Age == e.Age && employee.FirstName.ToLower().Contains(e.FirstName.ToLower()) && employee.LastName.ToLower().Contains(e.LastName.ToLower())).ToList()[0];
+        }
+
+        public static string RemoveEmployee(string id)
         {
 
-            Employee employee = employees.Where(x => x.Age == e.Age && x.FullName.ToLower().Contains(e.FullName.ToLower())).ToList()[0];
-            string message = "Deleted successfully";
+            Employee employee = employees.Where(x => x.ID == id).ToList()[0];
+            string message = $"\n * ********\nDeleted successfully.\n * ********\n";
 
             if (employees.Remove(employee))
             {
@@ -73,7 +84,7 @@ namespace DatabaseManager
                 }
                 catch (Exception ex)
                 {
-                    message = $"Unsuccessfully deleted {ex.Message}";
+                    message = $"Unsuccessfully deleted {ex}";
                 }
             }
 
@@ -81,12 +92,11 @@ namespace DatabaseManager
 
         }
 
-        public static string RemoveEmployee(string id)
+        public static string RemoveEmployee(Employee e)
         {
-            // handle excpetion
 
-            Employee employee = employees.Where(x => x.ID == id).ToList()[0];
-            string message = "Deleted successfully";
+            Employee employee = employees.Where(employee => employee.Age == e.Age && employee.FirstName.ToLower().Contains(e.FirstName.ToLower()) && employee.LastName.ToLower().Contains(e.LastName.ToLower())).ToList()[0];
+            string message = $"\n * ********\nDeleted successfully.\n * ********\n";
 
             if (employees.Remove(employee))
             {
@@ -97,7 +107,7 @@ namespace DatabaseManager
                 }
                 catch (Exception ex)
                 {
-                    message = $"Unsuccessfully deleted {ex.Message}";
+                    message = $"Unsuccessfully deleted {ex}";
                 }
             }
 
@@ -116,10 +126,9 @@ namespace DatabaseManager
             {
                 employees.ForEach(e => CreateDATFile(e));
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                return "Unsuccessfully saved the database";
-                throw;
+                return $"Unsuccessfully saved the database. {e.Message}";
             }
             return "Successfully saved the database";
         }
@@ -171,13 +180,13 @@ namespace DatabaseManager
             return e;
         }
 
-        public static string Output()
+        public static string FullOutput()
         {
             StringBuilder sb = new StringBuilder();
 
             foreach (var employee in employees)
             {
-                string toAppend = $"*****************\n{employee.ToString()}";
+                string toAppend = employee.ToString();
                 sb.Append(toAppend);
             }
 

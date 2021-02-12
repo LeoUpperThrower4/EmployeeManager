@@ -63,7 +63,7 @@ namespace EmployeeManager
 
         public override string ToString()
         {
-            return $"Full name: {FullName}\nAge: {Age}\nID: {ID}\n";
+            return $"\n*******************\nFull name: {FullName}\nAge: {Age}\nID: {ID}\n*******************\n";
         }
     }
 }
