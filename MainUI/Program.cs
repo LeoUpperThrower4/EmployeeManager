@@ -1,6 +1,7 @@
 ﻿using DatabaseManager;
 using EmployeeManager;
 using System;
+using System.Collections.Generic;
 
 namespace MainUI
 {
@@ -12,6 +13,7 @@ namespace MainUI
             {
                 Console.Write("Hello, would you like to add (1), modify (2), delete (3) or search (4) an existing employer? Just press enter to see full database. ");
                 string mainOption = Console.ReadLine();
+
                 try
                 {
                     switch (mainOption)
@@ -69,7 +71,46 @@ namespace MainUI
 
         private static void ModifyEmployee()
         {
-            Database.EditEmployee();
+            Console.Write("Edit by ID (1) or by employee's info (2)? ");
+
+            int option = 0;
+            do
+            {
+                while (!int.TryParse(Console.ReadLine().Replace(" ", ""), out option))
+                {
+                    Console.WriteLine("Please type only integer.");
+                }
+
+                if (option == 1)
+                {
+                    Console.Write("What is the employee's ID? ");
+                    string id = Console.ReadLine();
+                    Console.WriteLine($"\nSelected employee's ID: {Database.SearchEmployee(id)[0].ID}\n");
+
+                    Console.WriteLine("********New employee********");
+                    Employee newEmployee = AskEmployeeInfo();
+                    Database.RemoveEmployee(id);
+                    Database.AddEmployee(newEmployee);
+                }
+                else if (option == 2)
+                {
+
+                    Employee firstEmployee = AskEmployeeInfo();
+                    Console.WriteLine($"\nSelected employee's ID: {Database.SearchEmployee(firstEmployee)[0].ID}\n");
+
+                    Console.WriteLine("********New employee********");
+                    Employee newEmployee = AskEmployeeInfo();
+                    Database.RemoveEmployee(firstEmployee);
+                    Database.AddEmployee(newEmployee);
+                }
+                else
+                {
+                    Console.WriteLine("Type only 1 or 2? ");
+                }
+            } while (option != 1 && option != 2);
+
+            Console.WriteLine("Employee successfully modified.");
+
         }
 
         private static void RemoveEmployee()
@@ -119,38 +160,17 @@ namespace MainUI
                 {
                     Console.Write("What is the employee's ID? ");
                     string id = Console.ReadLine();
-                    try
-                    {
-                        Console.WriteLine(Database.SearchEmployee(id));
-                    }
-                    catch (ArgumentOutOfRangeException)
-                    {
-                        Console.WriteLine($"\n*********\nEmployee not found.\n*********\n");
-                        continue;
-                    }
-                    catch (Exception e)
-                    {
-                        Console.WriteLine($"{e}");
-                    }
+                    List<Employee> employees = Database.SearchEmployee(id);
+                    employees.ForEach(e => Console.WriteLine(e.ToString()));
                 }
                 else if (option == 2)
                 {
-                    try
-                    {
-                        Console.WriteLine(Database.SearchEmployee(AskEmployeeInfo()).ToString());
-                    }
-                    catch (ArgumentOutOfRangeException)
-                    {
-                        // handled later on the stack
-                    }
-                    catch (Exception e)
-                    {
-                        Console.WriteLine($"{e}");
-                    }
+                    List<Employee> employees = Database.SearchEmployee(AskEmployeeInfo());
+                    employees.ForEach(e => Console.WriteLine(e.ToString()));
                 }
                 else
                 {
-                    Console.WriteLine("Type only 1 or 2? ");
+                    Console.WriteLine("Type only 1 or 2. ");
                 }
             } while (option != 1 && option != 2);
         }

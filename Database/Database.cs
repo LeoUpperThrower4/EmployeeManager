@@ -59,21 +59,21 @@ namespace DatabaseManager
             return $"\n*********\nEmployee added successfully.\n*********\n"; ;
         }
 
-        public static Employee SearchEmployee(string id)
+        public static List<Employee> SearchEmployee(string id)
         {
-            return employees.Where(employee => employee.ID == id).ToList()[0];
+            return employees.Where(employee => employee.ID == id).ToList();
         }
 
-        public static Employee SearchEmployee(Employee e)
+        public static List<Employee> SearchEmployee(Employee e)
         {
-            return employees.Where(employee => employee.Age == e.Age && employee.FirstName.ToLower().Contains(e.FirstName.ToLower()) && employee.LastName.ToLower().Contains(e.LastName.ToLower())).ToList()[0];
+            return employees.Where(employee => employee.Age == e.Age && employee.FirstName.ToLower().Contains(e.FirstName.ToLower()) && employee.LastName.ToLower().Contains(e.LastName.ToLower())).ToList();
         }
 
         public static string RemoveEmployee(string id)
         {
 
             Employee employee = employees.Where(x => x.ID == id).ToList()[0];
-            string message = $"\n * ********\nDeleted successfully.\n * ********\n";
+            string message = $"\n *********\nDeleted successfully.\n *********\n";
 
             if (employees.Remove(employee))
             {
@@ -96,7 +96,7 @@ namespace DatabaseManager
         {
 
             Employee employee = employees.Where(employee => employee.Age == e.Age && employee.FirstName.ToLower().Contains(e.FirstName.ToLower()) && employee.LastName.ToLower().Contains(e.LastName.ToLower())).ToList()[0];
-            string message = $"\n * ********\nDeleted successfully.\n * ********\n";
+            string message = $"\n *********\nDeleted successfully.\n *********\n";
 
             if (employees.Remove(employee))
             {
@@ -113,11 +113,6 @@ namespace DatabaseManager
 
             return message;
 
-        }
-
-        public static void EditEmployee()
-        {
-            throw new NotImplementedException();
         }
 
         public static string SaveDatabase()

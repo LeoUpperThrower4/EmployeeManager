@@ -33,8 +33,6 @@ namespace EmployeeManager
 
                 return fullPath;
             }
-            set
-            { }//funciona sem nada?
 
         }
 
