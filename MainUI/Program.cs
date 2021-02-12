@@ -161,12 +161,26 @@ namespace MainUI
                     Console.Write("What is the employee's ID? ");
                     string id = Console.ReadLine();
                     List<Employee> employees = Database.SearchEmployee(id);
-                    employees.ForEach(e => Console.WriteLine(e.ToString()));
+                    if (employees.Count == 0)
+                    {
+                        throw new ArgumentOutOfRangeException();
+                    }
+                    else
+                    {
+                        employees.ForEach(e => Console.WriteLine(e.ToString()));
+                    }
                 }
                 else if (option == 2)
                 {
                     List<Employee> employees = Database.SearchEmployee(AskEmployeeInfo());
-                    employees.ForEach(e => Console.WriteLine(e.ToString()));
+                    if (employees.Count == 0)
+                    {
+                        throw new ArgumentOutOfRangeException();
+                    }
+                    else
+                    {
+                        employees.ForEach(e => Console.WriteLine(e.ToString()));
+                    }
                 }
                 else
                 {
