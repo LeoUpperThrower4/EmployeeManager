@@ -49,12 +49,21 @@ namespace EmployeeManager
 
         public void GetObjectData(SerializationInfo info, StreamingContext context)
         {
-            info.AddValue("employee", this);
+            info.AddValue("FN", this.FirstName);// add obj info in here
+            info.AddValue("LN", this.LastName);// add obj info in here
+            info.AddValue("AGE", this.Age);// add obj info in here
+        }
+
+        public Employee(SerializationInfo info, StreamingContext context)
+        {
+            this.FirstName = info.GetString("FN");
+            this.LastName = info.GetString("LN");
+            this.Age = info.GetInt32("AGE");
         }
 
         public override string ToString()
         {
-            return $"Full name: {FullName}. Age: {Age}. ID: {ID}";
+            return $"Full name: {FullName}\nAge: {Age}\nID: {ID}\n";
         }
     }
 }
