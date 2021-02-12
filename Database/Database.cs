@@ -11,12 +11,30 @@ namespace DatabaseManager
     public static class Database
     {
 
+        private static List<Employee> employees = new List<Employee>();
+
         static Database()
         {
-            CreateSampleData();
+            UpdateDatabase();
         }
 
-        private static List<Employee> employees = new List<Employee>();
+        private static void UpdateDatabase()
+        {
+            var cwd = Directory.GetCurrentDirectory();
+
+            string[] dirs = Directory.GetDirectories(cwd);
+
+            foreach (var dir in dirs)
+            {
+                DirectoryInfo dirInfo = new DirectoryInfo(dir);
+
+                string fullPath = Path.Combine(dir, dirInfo.Name);
+
+                Employee e = OpenDATFile(fullPath);
+
+                employees.Add(e);
+            }
+        }
 
         private static void CreateSampleData()
         {
@@ -25,6 +43,8 @@ namespace DatabaseManager
             employees.Add(new Employee("Orosman", "Silva", 72));
             employees.Add(new Employee("Regilaine", "Santos", 42));
             employees.Add(new Employee("Gabriel", "Huszcza", 22));
+
+            SaveDatabase();
         }
 
         public static List<Employee> GetData()
@@ -40,13 +60,48 @@ namespace DatabaseManager
 
         public static string RemoveEmployee(Employee e)
         {
-            //handleexcpetion
-            //treat strings
-            if (employees.Remove(employees.Where(x => x.Age == e.Age && x.FullName.ToLower() == e.FullName.ToLower()).ToList()[0]))
+
+            Employee employee = employees.Where(x => x.Age == e.Age && x.FullName.ToLower().Contains(e.FullName.ToLower())).ToList()[0];
+            string message = "Deleted successfully";
+
+            if (employees.Remove(employee))
             {
-                return "Deleted successfully";
+                try
+                {
+                    File.Delete(Path.Combine(employee.LocalPath, $"{employee.ID}.dat"));
+                    Directory.Delete(employee.LocalPath);
+                }
+                catch (Exception ex)
+                {
+                    message = $"Unsuccessfully deleted {ex.Message}";
+                }
             }
-            return "Unsuccessfully deleted";
+
+            return message;
+
+        }
+
+        public static string RemoveEmployee(string id)
+        {
+            // handle excpetion
+
+            Employee employee = employees.Where(x => x.ID == id).ToList()[0];
+            string message = "Deleted successfully";
+
+            if (employees.Remove(employee))
+            {
+                try
+                {
+                    File.Delete(Path.Combine(employee.LocalPath, $"{employee.ID}.dat"));
+                    Directory.Delete(employee.LocalPath);
+                }
+                catch (Exception ex)
+                {
+                    message = $"Unsuccessfully deleted {ex.Message}";
+                }
+            }
+
+            return message;
 
         }
 
@@ -55,7 +110,7 @@ namespace DatabaseManager
             throw new NotImplementedException();
         }
 
-        public static void SaveEmployees()
+        public static string SaveDatabase()
         {
             try
             {
@@ -63,12 +118,13 @@ namespace DatabaseManager
             }
             catch (Exception)
             {
+                return "Unsuccessfully saved the database";
                 throw;
             }
-
+            return "Successfully saved the database";
         }
 
-        public static bool CreateDATFile(Employee employee)
+        private static bool CreateDATFile(Employee employee)
         {
 
             if (!(Directory.Exists(employee.LocalPath)))
@@ -87,10 +143,24 @@ namespace DatabaseManager
             return true;
         }
 
-        public static Employee OpenDATFile(Employee employee)
+        private static Employee OpenDATFile(Employee employee)
         {
 
             Stream stream = File.Open($"{Path.Combine(employee.LocalPath, employee.ID)}.dat", FileMode.Open);
+
+            BinaryFormatter bf = new BinaryFormatter();
+
+            var e = (Employee)bf.Deserialize(stream);
+
+            stream.Close();
+
+            return e;
+        }
+
+        private static Employee OpenDATFile(string path)
+        {
+
+            Stream stream = File.Open($"{path}.dat", FileMode.Open);
 
             BinaryFormatter bf = new BinaryFormatter();
 
@@ -107,10 +177,7 @@ namespace DatabaseManager
 
             foreach (var employee in employees)
             {
-                string toAppend =
-                    "*****************\n" +
-                    $"Full name: {employee.FullName}\n" +
-                    $"Age: {employee.Age}\n";
+                string toAppend = $"*****************\n{employee.ToString()}";
                 sb.Append(toAppend);
             }
 
