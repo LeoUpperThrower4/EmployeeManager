@@ -14,11 +14,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Leo\\source\\repos\\LeoIncEmployeeManager\\Employee\\Employee.csproj",
+      "projectUniqueName": "C:\\Users\\Leo\\source\\repos\\DoneProjects\\LeoIncEmployeeManager\\Employee\\Employee.csproj",
       "projectName": "Employee",
-      "projectPath": "C:\\Users\\Leo\\source\\repos\\LeoIncEmployeeManager\\Employee\\Employee.csproj",
+      "projectPath": "C:\\Users\\Leo\\source\\repos\\DoneProjects\\LeoIncEmployeeManager\\Employee\\Employee.csproj",
       "packagesPath": "C:\\Users\\Leo\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Leo\\source\\repos\\LeoIncEmployeeManager\\Employee\\obj\\",
+      "outputPath": "C:\\Users\\Leo\\source\\repos\\DoneProjects\\LeoIncEmployeeManager\\Employee\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Microsoft\\Xamarin\\NuGet\\"

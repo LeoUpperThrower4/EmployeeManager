@@ -1,0 +1,50 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v3.1",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v3.1": {
+      "MainUI/1.0.0": {
+        "dependencies": {
+          "Database": "1.0.0",
+          "Employee": "1.0.0"
+        },
+        "runtime": {
+          "MainUI.dll": {}
+        }
+      },
+      "Database/1.0.0": {
+        "dependencies": {
+          "Employee": "1.0.0"
+        },
+        "runtime": {
+          "Database.dll": {}
+        }
+      },
+      "Employee/1.0.0": {
+        "runtime": {
+          "Employee.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "MainUI/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Database/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Employee/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

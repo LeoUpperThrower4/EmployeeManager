@@ -5,8 +5,9 @@ using System.Runtime.Serialization;
 namespace EmployeeManager
 {
     [Serializable]
-    public class Employee : ISerializable
+    public class RemoteEmployee : IEmployee
     {
+        public string Type { get; } = "Remote";
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public int Age { get; set; }
@@ -21,7 +22,8 @@ namespace EmployeeManager
         {
             get
             {
-                return $"{this.FirstName.ToLower()}_{this.LastName.ToLower()}{this.Age}";
+                string prefix = Type == "Remote" ? "r" : "p";
+                return $"{prefix}{this.FirstName.ToLower()}_{this.LastName.ToLower()}{this.Age}";
             }
         }
         public string LocalPath
@@ -36,9 +38,9 @@ namespace EmployeeManager
 
         }
 
-        public Employee() { }
+        public RemoteEmployee() { }
 
-        public Employee(string firstName, string lastName, int age)
+        public RemoteEmployee(string firstName, string lastName, int age)
         {
             this.FirstName = firstName;
             this.LastName = lastName;
@@ -47,21 +49,23 @@ namespace EmployeeManager
 
         public void GetObjectData(SerializationInfo info, StreamingContext context)
         {
-            info.AddValue("FN", this.FirstName);// add obj info in here
-            info.AddValue("LN", this.LastName);// add obj info in here
-            info.AddValue("AGE", this.Age);// add obj info in here
+            info.AddValue("FN", this.FirstName);
+            info.AddValue("LN", this.LastName);
+            info.AddValue("AGE", this.Age);
+            info.AddValue("TYPE", this.Type);
         }
 
-        public Employee(SerializationInfo info, StreamingContext context)
+        public RemoteEmployee(SerializationInfo info, StreamingContext context)
         {
             this.FirstName = info.GetString("FN");
             this.LastName = info.GetString("LN");
             this.Age = info.GetInt32("AGE");
+            this.Type = info.GetString("TYPE");
         }
 
         public override string ToString()
         {
-            return $"\n*******************\nFull name: {FullName}\nAge: {Age}\nID: {ID}\n*******************\n";
+            return $"\n*******************\nFull name: {FullName}\nAge: {Age}\nID: {ID}\nType: {Type}\n*******************\n";
         }
     }
 }

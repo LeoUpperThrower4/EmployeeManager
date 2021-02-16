@@ -7,3 +7,12 @@ C:\Users\Leo\source\repos\LeoIncEmployeeManager\Employee\obj\Debug\netcoreapp3.1
 C:\Users\Leo\source\repos\LeoIncEmployeeManager\Employee\obj\Debug\netcoreapp3.1\Employee.csproj.CoreCompileInputs.cache
 C:\Users\Leo\source\repos\LeoIncEmployeeManager\Employee\obj\Debug\netcoreapp3.1\Employee.dll
 C:\Users\Leo\source\repos\LeoIncEmployeeManager\Employee\obj\Debug\netcoreapp3.1\Employee.pdb
+C:\Users\Leo\source\repos\DoneProjects\LeoIncEmployeeManager\Employee\bin\Debug\netcoreapp3.1\Employee.deps.json
+C:\Users\Leo\source\repos\DoneProjects\LeoIncEmployeeManager\Employee\bin\Debug\netcoreapp3.1\Employee.dll
+C:\Users\Leo\source\repos\DoneProjects\LeoIncEmployeeManager\Employee\bin\Debug\netcoreapp3.1\Employee.pdb
+C:\Users\Leo\source\repos\DoneProjects\LeoIncEmployeeManager\Employee\obj\Debug\netcoreapp3.1\Employee.csprojAssemblyReference.cache
+C:\Users\Leo\source\repos\DoneProjects\LeoIncEmployeeManager\Employee\obj\Debug\netcoreapp3.1\Employee.AssemblyInfoInputs.cache
+C:\Users\Leo\source\repos\DoneProjects\LeoIncEmployeeManager\Employee\obj\Debug\netcoreapp3.1\Employee.AssemblyInfo.cs
+C:\Users\Leo\source\repos\DoneProjects\LeoIncEmployeeManager\Employee\obj\Debug\netcoreapp3.1\Employee.csproj.CoreCompileInputs.cache
+C:\Users\Leo\source\repos\DoneProjects\LeoIncEmployeeManager\Employee\obj\Debug\netcoreapp3.1\Employee.dll
+C:\Users\Leo\source\repos\DoneProjects\LeoIncEmployeeManager\Employee\obj\Debug\netcoreapp3.1\Employee.pdb

@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Leo\\source\\repos\\LeoIncEmployeeManager\\Database\\Database.csproj": {}
+    "C:\\Users\\Leo\\source\\repos\\DoneProjects\\LeoIncEmployeeManager\\Database\\Database.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Leo\\source\\repos\\LeoIncEmployeeManager\\Database\\Database.csproj": {
+    "C:\\Users\\Leo\\source\\repos\\DoneProjects\\LeoIncEmployeeManager\\Database\\Database.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Leo\\source\\repos\\LeoIncEmployeeManager\\Database\\Database.csproj",
+        "projectUniqueName": "C:\\Users\\Leo\\source\\repos\\DoneProjects\\LeoIncEmployeeManager\\Database\\Database.csproj",
         "projectName": "Database",
-        "projectPath": "C:\\Users\\Leo\\source\\repos\\LeoIncEmployeeManager\\Database\\Database.csproj",
+        "projectPath": "C:\\Users\\Leo\\source\\repos\\DoneProjects\\LeoIncEmployeeManager\\Database\\Database.csproj",
         "packagesPath": "C:\\Users\\Leo\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Leo\\source\\repos\\LeoIncEmployeeManager\\Database\\obj\\",
+        "outputPath": "C:\\Users\\Leo\\source\\repos\\DoneProjects\\LeoIncEmployeeManager\\Database\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Microsoft\\Xamarin\\NuGet\\"
@@ -32,8 +32,8 @@
           "netcoreapp3.1": {
             "targetAlias": "netcoreapp3.1",
             "projectReferences": {
-              "C:\\Users\\Leo\\source\\repos\\LeoIncEmployeeManager\\Employee\\Employee.csproj": {
-                "projectPath": "C:\\Users\\Leo\\source\\repos\\LeoIncEmployeeManager\\Employee\\Employee.csproj"
+              "C:\\Users\\Leo\\source\\repos\\DoneProjects\\LeoIncEmployeeManager\\Employee\\Employee.csproj": {
+                "projectPath": "C:\\Users\\Leo\\source\\repos\\DoneProjects\\LeoIncEmployeeManager\\Employee\\Employee.csproj"
               }
             }
           }
@@ -66,14 +66,14 @@
         }
       }
     },
-    "C:\\Users\\Leo\\source\\repos\\LeoIncEmployeeManager\\Employee\\Employee.csproj": {
+    "C:\\Users\\Leo\\source\\repos\\DoneProjects\\LeoIncEmployeeManager\\Employee\\Employee.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Leo\\source\\repos\\LeoIncEmployeeManager\\Employee\\Employee.csproj",
+        "projectUniqueName": "C:\\Users\\Leo\\source\\repos\\DoneProjects\\LeoIncEmployeeManager\\Employee\\Employee.csproj",
         "projectName": "Employee",
-        "projectPath": "C:\\Users\\Leo\\source\\repos\\LeoIncEmployeeManager\\Employee\\Employee.csproj",
+        "projectPath": "C:\\Users\\Leo\\source\\repos\\DoneProjects\\LeoIncEmployeeManager\\Employee\\Employee.csproj",
         "packagesPath": "C:\\Users\\Leo\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Leo\\source\\repos\\LeoIncEmployeeManager\\Employee\\obj\\",
+        "outputPath": "C:\\Users\\Leo\\source\\repos\\DoneProjects\\LeoIncEmployeeManager\\Employee\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Microsoft\\Xamarin\\NuGet\\"

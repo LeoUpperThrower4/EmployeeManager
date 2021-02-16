@@ -1,0 +1,9 @@
+C:\Users\Leo\source\repos\DoneProjects\LeoIncEmployeeManager\Employee\bin\Release\netcoreapp3.1\Employee.deps.json
+C:\Users\Leo\source\repos\DoneProjects\LeoIncEmployeeManager\Employee\bin\Release\netcoreapp3.1\Employee.dll
+C:\Users\Leo\source\repos\DoneProjects\LeoIncEmployeeManager\Employee\bin\Release\netcoreapp3.1\Employee.pdb
+C:\Users\Leo\source\repos\DoneProjects\LeoIncEmployeeManager\Employee\obj\Release\netcoreapp3.1\Employee.csprojAssemblyReference.cache
+C:\Users\Leo\source\repos\DoneProjects\LeoIncEmployeeManager\Employee\obj\Release\netcoreapp3.1\Employee.AssemblyInfoInputs.cache
+C:\Users\Leo\source\repos\DoneProjects\LeoIncEmployeeManager\Employee\obj\Release\netcoreapp3.1\Employee.AssemblyInfo.cs
+C:\Users\Leo\source\repos\DoneProjects\LeoIncEmployeeManager\Employee\obj\Release\netcoreapp3.1\Employee.csproj.CoreCompileInputs.cache
+C:\Users\Leo\source\repos\DoneProjects\LeoIncEmployeeManager\Employee\obj\Release\netcoreapp3.1\Employee.dll
+C:\Users\Leo\source\repos\DoneProjects\LeoIncEmployeeManager\Employee\obj\Release\netcoreapp3.1\Employee.pdb

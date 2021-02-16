@@ -85,21 +85,21 @@ namespace MainUI
                 {
                     Console.Write("What is the employee's ID? ");
                     string id = Console.ReadLine();
-                    Console.WriteLine($"\nSelected employee's ID: {Database.SearchEmployee(id)[0].ID}\n");
+                    Console.WriteLine($"\nSelected employee's ID: {Database.SearchEmployee(id)[0]}\n");
 
                     Console.WriteLine("********New employee********");
-                    Employee newEmployee = AskEmployeeInfo();
+                    IEmployee newEmployee = AskEmployeeInfo();
                     Database.RemoveEmployee(id);
                     Database.AddEmployee(newEmployee);
                 }
                 else if (option == 2)
                 {
 
-                    Employee firstEmployee = AskEmployeeInfo();
-                    Console.WriteLine($"\nSelected employee's ID: {Database.SearchEmployee(firstEmployee)[0].ID}\n");
+                    IEmployee firstEmployee = AskEmployeeInfo();
+                    Console.WriteLine($"\nSelected employee's ID: {Database.SearchEmployee(firstEmployee)[0]}\n");
 
                     Console.WriteLine("********New employee********");
-                    Employee newEmployee = AskEmployeeInfo();
+                    IEmployee newEmployee = AskEmployeeInfo();
                     Database.RemoveEmployee(firstEmployee);
                     Database.AddEmployee(newEmployee);
                 }
@@ -156,11 +156,14 @@ namespace MainUI
                     Console.WriteLine("Please type only integer.");
                 }
 
+                List<IEmployee> employees;
+
                 if (option == 1)
                 {
                     Console.Write("What is the employee's ID? ");
                     string id = Console.ReadLine();
-                    List<Employee> employees = Database.SearchEmployee(id);
+                    employees = Database.SearchEmployee(id);
+
                     if (employees.Count == 0)
                     {
                         throw new ArgumentOutOfRangeException();
@@ -172,7 +175,8 @@ namespace MainUI
                 }
                 else if (option == 2)
                 {
-                    List<Employee> employees = Database.SearchEmployee(AskEmployeeInfo());
+                    employees = Database.SearchEmployee(AskEmployeeInfo());
+
                     if (employees.Count == 0)
                     {
                         throw new ArgumentOutOfRangeException();
@@ -189,13 +193,15 @@ namespace MainUI
             } while (option != 1 && option != 2);
         }
 
-        static Employee AskEmployeeInfo()
+        static IEmployee AskEmployeeInfo()
         {
-            Employee e = new Employee();
+            IEmployee e;
             Console.Write("\nWhat's the employee's first name? ");
-            e.FirstName = Console.ReadLine().Replace(" ", "");
+            string firstName = Console.ReadLine().Replace(" ", "");
+
             Console.Write("What's the employee's last name? ");
-            e.LastName = Console.ReadLine().Replace(" ", "");
+            string lastName = Console.ReadLine().Replace(" ", "");
+
             Console.Write("What's the employee's age? ");
 
             int age = 0;
@@ -205,7 +211,23 @@ namespace MainUI
                 Console.WriteLine("Please type only integer.");
             }
 
-            e.Age = age;
+            Console.Write("What's the employee's type? (0) Physical (1) Remote. ");
+
+            int type = 0;
+
+            while (!int.TryParse(Console.ReadLine().Replace(" ", ""), out type))
+            {
+                Console.WriteLine("Please type only integer. (0) Physical (1) Remote. ");
+            }
+
+            if (type == 0)
+            {
+                e = new PhysicalEmployee { FirstName = firstName, Age = age, LastName = lastName };
+            }
+            else
+            {
+                e = new RemoteEmployee { FirstName = firstName, Age = age, LastName = lastName };
+            }
 
             return e;
         }

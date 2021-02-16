@@ -11,7 +11,7 @@ namespace DatabaseManager
     public static class Database
     {
 
-        private static List<Employee> employees = new List<Employee>();
+        private static Employees _employees = new Employees();
 
         static Database()
         {
@@ -30,52 +30,60 @@ namespace DatabaseManager
 
                 string fullPath = Path.Combine(dir, dirInfo.Name);
 
-                Employee e = OpenDATFile(fullPath);
+                IEmployee e = OpenDATFile(fullPath);
 
-                employees.Add(e);
+                _employees.Add(e);
             }
         }
 
         private static void CreateSampleData()
         {
-            employees.Add(new Employee("Leonardo", "Silva", 19));
-            employees.Add(new Employee("Fernanda", "Kipper", 19));
-            employees.Add(new Employee("Orosman", "Silva", 72));
-            employees.Add(new Employee("Regilaine", "Santos", 42));
-            employees.Add(new Employee("Gabriel", "Huszcza", 22));
+            _employees.Add(new PhysicalEmployee("Leonardo", "Silva", 19));
+            _employees.Add(new PhysicalEmployee("Fernanda", "Kipper", 19));
+            _employees.Add(new PhysicalEmployee("Orosman", "Silva", 72));
+            _employees.Add(new PhysicalEmployee("Regilaine", "Santos", 42));
+            _employees.Add(new RemoteEmployee("Gabriel", "Huszcza", 22));
 
             SaveDatabase();
         }
 
-        public static List<Employee> GetData()
+        public static Employees GetData()
         {
-            return employees;
+            UpdateDatabase();
+            return _employees;
         }
 
-        public static string AddEmployee(Employee e)
+        public static string AddEmployee(IEmployee e)
         {
-            employees.Add(e);
-            SaveDatabase();
-            return $"\n*********\nEmployee added successfully.\n*********\n"; ;
+            if (!ExistsEmployeeFolder(e))
+            {
+                _employees.Add(e);
+                SaveDatabase();
+
+                return $"\n*********\nEmployee added successfully.\n*********\n"; ;
+            }
+
+            return $"\n*********\nEmployee already exists.\n*********\n"; ;
+
         }
 
-        public static List<Employee> SearchEmployee(string id)
+        public static List<IEmployee> SearchEmployee(string id)
         {
-            return employees.Where(employee => employee.ID == id).ToList();
+            return _employees.Where(employee => employee.ID == id).ToList();
         }
 
-        public static List<Employee> SearchEmployee(Employee e)
+        public static List<IEmployee> SearchEmployee(IEmployee e)
         {
-            return employees.Where(employee => employee.Age == e.Age && employee.FirstName.ToLower().Contains(e.FirstName.ToLower()) && employee.LastName.ToLower().Contains(e.LastName.ToLower())).ToList();
+            return _employees.Where(employee => employee.Age == e.Age && employee.FirstName.ToLower().Contains(e.FirstName.ToLower()) && employee.LastName.ToLower().Contains(e.LastName.ToLower())).ToList();
         }
 
         public static string RemoveEmployee(string id)
         {
 
-            Employee employee = employees.Where(x => x.ID == id).ToList()[0];
+            IEmployee employee = _employees.Where(x => x.ID == id).ToList()[0];
             string message = $"\n *********\nDeleted successfully.\n *********\n";
 
-            if (employees.Remove(employee))
+            if (_employees.Remove(employee))
             {
                 try
                 {
@@ -92,13 +100,13 @@ namespace DatabaseManager
 
         }
 
-        public static string RemoveEmployee(Employee e)
+        public static string RemoveEmployee(IEmployee e)
         {
 
-            Employee employee = employees.Where(employee => employee.Age == e.Age && employee.FirstName.ToLower().Contains(e.FirstName.ToLower()) && employee.LastName.ToLower().Contains(e.LastName.ToLower())).ToList()[0];
+            IEmployee employee = _employees.Where(employee => employee.Age == e.Age && employee.FirstName.ToLower().Contains(e.FirstName.ToLower()) && employee.LastName.ToLower().Contains(e.LastName.ToLower())).ToList()[0];
             string message = $"\n *********\nDeleted successfully.\n *********\n";
 
-            if (employees.Remove(employee))
+            if (_employees.Remove(employee))
             {
                 try
                 {
@@ -119,7 +127,10 @@ namespace DatabaseManager
         {
             try
             {
-                employees.ForEach(e => CreateDATFile(e));
+                foreach (IEmployee employee in _employees)
+                {
+                    CreateDATFile(employee);
+                }
             }
             catch (Exception e)
             {
@@ -128,7 +139,7 @@ namespace DatabaseManager
             return "Successfully saved the database";
         }
 
-        private static bool CreateDATFile(Employee employee)
+        private static bool CreateDATFile(IEmployee employee)
         {
 
             if (!(Directory.Exists(employee.LocalPath)))
@@ -147,28 +158,28 @@ namespace DatabaseManager
             return true;
         }
 
-        private static Employee OpenDATFile(Employee employee)
+        private static IEmployee OpenDATFile(IEmployee employee)
         {
 
             Stream stream = File.Open($"{Path.Combine(employee.LocalPath, employee.ID)}.dat", FileMode.Open);
 
             BinaryFormatter bf = new BinaryFormatter();
 
-            var e = (Employee)bf.Deserialize(stream);
+            var e = (IEmployee)bf.Deserialize(stream);
 
             stream.Close();
 
             return e;
         }
 
-        private static Employee OpenDATFile(string path)
+        private static IEmployee OpenDATFile(string path)
         {
 
             Stream stream = File.Open($"{path}.dat", FileMode.Open);
 
             BinaryFormatter bf = new BinaryFormatter();
 
-            var e = (Employee)bf.Deserialize(stream);
+            var e = (IEmployee)bf.Deserialize(stream);
 
             stream.Close();
 
@@ -179,7 +190,7 @@ namespace DatabaseManager
         {
             StringBuilder sb = new StringBuilder();
 
-            foreach (var employee in employees)
+            foreach (var employee in _employees)
             {
                 string toAppend = employee.ToString();
                 sb.Append(toAppend);
@@ -188,7 +199,7 @@ namespace DatabaseManager
             return sb.ToString();
         }
 
-        public static bool ExistsEmployeeFolder(Employee employee)
+        public static bool ExistsEmployeeFolder(IEmployee employee)
         {
             var cwd = Directory.GetCurrentDirectory();
             var exists = Directory.Exists(Path.Combine(cwd, employee.ID));
@@ -196,7 +207,7 @@ namespace DatabaseManager
             return exists;
         }
 
-        public static bool CreateEmployeeFolder(Employee employee)
+        public static bool CreateEmployeeFolder(IEmployee employee)
         {
             var cwd = Directory.GetCurrentDirectory();
             var dirInfo = Directory.CreateDirectory(Path.Combine(cwd, employee.ID));
