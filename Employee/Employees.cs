@@ -5,7 +5,7 @@ namespace EmployeeManager
 {
     public class Employees : IEnumerable<IEmployee>
     {
-        private List<IEmployee> _employees = new List<IEmployee>();
+        private readonly List<IEmployee> _employees = new List<IEmployee>();
 
         public void Add(IEmployee e)
         {
@@ -14,7 +14,7 @@ namespace EmployeeManager
 
         public bool Remove(IEmployee employee)
         {
-            return _employees.Remove(employee) ? true : false;
+            return _employees.Remove(employee);
         }
 
         public IEnumerator<IEmployee> GetEnumerator()

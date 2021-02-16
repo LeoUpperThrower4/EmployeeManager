@@ -11,7 +11,7 @@ namespace DatabaseManager
     public static class Database
     {
 
-        private static Employees _employees = new Employees();
+        private static readonly Employees _employees = new Employees();
 
         static Database()
         {
@@ -30,21 +30,8 @@ namespace DatabaseManager
 
                 string fullPath = Path.Combine(dir, dirInfo.Name);
 
-                IEmployee e = OpenDATFile(fullPath);
-
-                _employees.Add(e);
+                _employees.Add(OpenDATFile(fullPath));
             }
-        }
-
-        private static void CreateSampleData()
-        {
-            _employees.Add(new PhysicalEmployee("Leonardo", "Silva", 19));
-            _employees.Add(new PhysicalEmployee("Fernanda", "Kipper", 19));
-            _employees.Add(new PhysicalEmployee("Orosman", "Silva", 72));
-            _employees.Add(new PhysicalEmployee("Regilaine", "Santos", 42));
-            _employees.Add(new RemoteEmployee("Gabriel", "Huszcza", 22));
-
-            SaveDatabase();
         }
 
         public static Employees GetData()
@@ -74,7 +61,7 @@ namespace DatabaseManager
 
         public static List<IEmployee> SearchEmployee(IEmployee e)
         {
-            return _employees.Where(employee => employee.Age == e.Age && employee.FirstName.ToLower().Contains(e.FirstName.ToLower()) && employee.LastName.ToLower().Contains(e.LastName.ToLower())).ToList();
+            return _employees.Where(employee => employee.Type == e.Type && employee.Age == e.Age && employee.FirstName.ToLower() == e.FirstName.ToLower() && employee.LastName.ToLower() == e.LastName.ToLower()).ToList();
         }
 
         public static string RemoveEmployee(string id)
@@ -103,7 +90,7 @@ namespace DatabaseManager
         public static string RemoveEmployee(IEmployee e)
         {
 
-            IEmployee employee = _employees.Where(employee => employee.Age == e.Age && employee.FirstName.ToLower().Contains(e.FirstName.ToLower()) && employee.LastName.ToLower().Contains(e.LastName.ToLower())).ToList()[0];
+            IEmployee employee = _employees.Where(employee => employee.Type == e.Type && employee.Age == e.Age && employee.FirstName.ToLower().Contains(e.FirstName.ToLower()) && employee.LastName.ToLower().Contains(e.LastName.ToLower())).ToList()[0];
             string message = $"\n *********\nDeleted successfully.\n *********\n";
 
             if (_employees.Remove(employee))
@@ -158,7 +145,9 @@ namespace DatabaseManager
             return true;
         }
 
+#pragma warning disable IDE0051 // Remove unused private members
         private static IEmployee OpenDATFile(IEmployee employee)
+#pragma warning restore IDE0051 // Remove unused private members
         {
 
             Stream stream = File.Open($"{Path.Combine(employee.LocalPath, employee.ID)}.dat", FileMode.Open);

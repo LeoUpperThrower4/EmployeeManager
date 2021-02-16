@@ -7,11 +7,11 @@ namespace MainUI
 {
     class Program
     {
-        static void Main(string[] args)
+        static void Main()
         {
             while (true)
             {
-                Console.Write("Hello, would you like to add (1), modify (2), delete (3) or search (4) an existing employer? Just press enter to see full database. ");
+                Console.Write("Hello, would you like to add (1), modify (2), delete (3) or search (4) an existing employee? Just press enter to see full database. ");
                 string mainOption = Console.ReadLine();
 
                 try
@@ -73,41 +73,39 @@ namespace MainUI
         {
             Console.Write("Edit by ID (1) or by employee's info (2)? ");
 
-            int option = 0;
-            do
+            int option;
+            while (!int.TryParse(Console.ReadLine().Replace(" ", ""), out option) && option != 1 && option != 2)
             {
-                while (!int.TryParse(Console.ReadLine().Replace(" ", ""), out option))
-                {
-                    Console.WriteLine("Please type only integer.");
-                }
+                Console.WriteLine("Please type only integer.");
+            }
 
-                if (option == 1)
-                {
-                    Console.Write("What is the employee's ID? ");
-                    string id = Console.ReadLine();
-                    Console.WriteLine($"\nSelected employee's ID: {Database.SearchEmployee(id)[0]}\n");
+            if (option == 1)
+            {
+                Console.Write("What is the employee's ID? ");
+                string id = Console.ReadLine();
+                Console.WriteLine($"\nSelected employee's ID: { Database.SearchEmployee(id)[0] }\n");
 
-                    Console.WriteLine("********New employee********");
-                    IEmployee newEmployee = AskEmployeeInfo();
-                    Database.RemoveEmployee(id);
-                    Database.AddEmployee(newEmployee);
-                }
-                else if (option == 2)
-                {
+                Console.WriteLine("********New employee********");
+                IEmployee newEmployee = AskEmployeeInfo();
+                Database.RemoveEmployee(id);
+                Database.AddEmployee(newEmployee);
+            }
+            else if (option == 2)
+            {
 
-                    IEmployee firstEmployee = AskEmployeeInfo();
-                    Console.WriteLine($"\nSelected employee's ID: {Database.SearchEmployee(firstEmployee)[0]}\n");
+                IEmployee firstEmployee = AskEmployeeInfo();
+                Console.WriteLine($"\nSelected employee's ID: { Database.SearchEmployee(firstEmployee)[0] }\n");
 
-                    Console.WriteLine("********New employee********");
-                    IEmployee newEmployee = AskEmployeeInfo();
-                    Database.RemoveEmployee(firstEmployee);
-                    Database.AddEmployee(newEmployee);
-                }
-                else
-                {
-                    Console.WriteLine("Type only 1 or 2? ");
-                }
-            } while (option != 1 && option != 2);
+                Console.WriteLine("********New employee********");
+                IEmployee newEmployee = AskEmployeeInfo();
+                Database.RemoveEmployee(firstEmployee);
+                Database.AddEmployee(newEmployee);
+            }
+            else
+            {
+                Console.WriteLine("Type only 1 or 2? ");
+            }
+
 
             Console.WriteLine("Employee successfully modified.");
 
@@ -117,7 +115,7 @@ namespace MainUI
         {
             Console.Write("Remove by ID (1) or by employee's info (2)? ");
 
-            int option = 0;
+            int option;
 
             do
             {
@@ -202,9 +200,9 @@ namespace MainUI
             Console.Write("What's the employee's last name? ");
             string lastName = Console.ReadLine().Replace(" ", "");
 
-            Console.Write("What's the employee's age? ");
+            int age;
 
-            int age = 0;
+            Console.Write("What's the employee's age? ");
 
             while (!int.TryParse(Console.ReadLine().Replace(" ", ""), out age))
             {
@@ -213,9 +211,9 @@ namespace MainUI
 
             Console.Write("What's the employee's type? (0) Physical (1) Remote. ");
 
-            int type = 0;
+            int type;
 
-            while (!int.TryParse(Console.ReadLine().Replace(" ", ""), out type))
+            while (!int.TryParse(Console.ReadLine().Replace(" ", ""), out type) && type != 1 && type != 2)
             {
                 Console.WriteLine("Please type only integer. (0) Physical (1) Remote. ");
             }
@@ -229,7 +227,9 @@ namespace MainUI
                 e = new RemoteEmployee { FirstName = firstName, Age = age, LastName = lastName };
             }
 
+
             return e;
+
         }
     }
 }
