@@ -38,6 +38,8 @@ namespace EmployeeManager
 
         }
 
+        // could have added unique functions for remote employees only, like instead of having a physical address, have an email to send notifications
+
         public RemoteEmployee() { }
 
         public RemoteEmployee(string firstName, string lastName, int age)
