@@ -72,42 +72,36 @@ namespace MainUI
         private static void ModifyEmployee()
         {
             Console.Write("Edit by ID (1) or by employee's info (2)? ");
-
+            IEmployee selectedEmployee;
+            IEmployee newEmployee;
             int option;
+
             while (!int.TryParse(Console.ReadLine().Replace(" ", ""), out option) && option != 1 && option != 2)
             {
-                Console.WriteLine("Please type only integer.");
+                Console.WriteLine("Please type only 1 or 2.");
             }
 
             if (option == 1)
             {
                 Console.Write("What is the employee's ID? ");
                 string id = Console.ReadLine();
-                Console.WriteLine($"\nSelected employee's ID: { Database.SearchEmployee(id)[0] }\n");
-
-                Console.WriteLine("********New employee********");
-                IEmployee newEmployee = AskEmployeeInfo();
-                Database.RemoveEmployee(id);
-                Database.AddEmployee(newEmployee);
-            }
-            else if (option == 2)
-            {
-
-                IEmployee firstEmployee = AskEmployeeInfo();
-                Console.WriteLine($"\nSelected employee's ID: { Database.SearchEmployee(firstEmployee)[0] }\n");
-
-                Console.WriteLine("********New employee********");
-                IEmployee newEmployee = AskEmployeeInfo();
-                Database.RemoveEmployee(firstEmployee);
-                Database.AddEmployee(newEmployee);
+                selectedEmployee = Database.SearchEmployee(id)[0];
             }
             else
             {
-                Console.WriteLine("Type only 1 or 2? ");
+                selectedEmployee = AskEmployeeInfo();
             }
 
+            Console.WriteLine($"\nSelected employee's ID: { Database.SearchEmployee(selectedEmployee)[0].ID }\n");
+            Console.WriteLine("********New employee********");
+            newEmployee = AskEmployeeInfo();
 
-            Console.WriteLine("Employee successfully modified.");
+            if (Database.ModifyEmployee(selectedEmployee, newEmployee))
+            {
+                Console.WriteLine("\n********Employee successfully modified.********\n");
+            }
+
+            Console.WriteLine("\n********Employee was not successfully modified. User already exists.********\n");
 
         }
 

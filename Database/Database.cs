@@ -110,6 +110,20 @@ namespace DatabaseManager
 
         }
 
+        public static bool ModifyEmployee(IEmployee selectedEmployee, IEmployee newEmployee)
+        {
+            if (!ExistsEmployeeFolder(newEmployee))
+            {
+                Database.RemoveEmployee(selectedEmployee);
+                Database.AddEmployee(newEmployee);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
         public static string SaveDatabase()
         {
             try
